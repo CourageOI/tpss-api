@@ -5,7 +5,8 @@ The TPSS is used to calculate the amount due to one or more split payment 'entit
 ## Stack
 
 The API was built using Nodejs and Expressjs.
-it was hosted on Heroku hosting platform
+it was hosted on Heroku hosting platform 
+Link: `https://tpss-api.herokuapp.com/`
 
 ### API documentation
 
