@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: tpss-app
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: tpss-app
@@ -16,7 +16,7 @@ spec:
         - name: tpss-app
           image: courageoi/nodeapp:1.0
           ports:
-          - containerPort: 8000
+          - containerPort: 3001
           resources:
             requests:
               cpu: "0.5"
@@ -35,8 +35,5 @@ spec:
     name: tpss-app
   ports:
     - name: http
-      port: 80
-      targetPort: 80
-    - name: https
-      port: 443
-      targetPort: 443
+      port: 3001
+      targetPort: 3001
