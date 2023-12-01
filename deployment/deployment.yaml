@@ -32,7 +32,7 @@ metadata:
   name: tpss-app-service-stable
 spec:
   selector:
-    name: tpss-app
+    name: tpss-rollout-demo
   ports:
     - name: http
       port: 80
@@ -44,7 +44,7 @@ metadata:
   name: tpss-app-service-canary
 spec:
   selector:
-    name: tpss-app
+    name: tpss-rollout-demo
   ports:
     - name: http
       port: 80
@@ -59,14 +59,14 @@ spec:
   replicas: 5
   selector:
     matchLabels:
-      app: tpss-app
+      app: tpss-rollout-demo
   template:
     metadata:
       labels:
-        app: tpss-app
+        app: tpss-rollout-demo
     spec:
       containers:
-        - name: tpss-app
+        - name: nginx
           image: nginx:latest
           ports:
           - containerPort: 3001
