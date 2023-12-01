@@ -1,0 +1,51 @@
+name: Docker Build and Deploy to ECS
+
+on:
+  push:
+    branches:
+      - main # Change this to your main branch name
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and tag Docker image
+        run: |
+          docker build -t your-dockerhub-username/your-image-name:latest .
+          docker tag your-dockerhub-username/your-image-name:latest your-dockerhub-username/your-image-name:latest
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker push your-dockerhub-username/your-image-name:latest
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1 # Change this to your desired AWS region
+
+      # - name: Deploy to AWS ECS
+      #   run: |
+      #     # Update your ECS cluster name, service name, and task definition name
+      #     ECS_CLUSTER_NAME="your-ecs-cluster-name"
+      #     ECS_SERVICE_NAME="your-ecs-service-name"
+      #     TASK_DEFINITION_NAME="your-task-definition-name"
+          
+      #     # Create a new task definition revision
+      #     aws ecs register-task-definition \
+      #       --family $TASK_DEFINITION_NAME \
+      #       --container-definitions '[{"name":"your-container-name","image":"your-dockerhub-username/your-image-name:latest"}]'
+          
+      #     # Update the ECS service to use the new task definition
+      #     aws ecs update-service \
+      #       --cluster $ECS_CLUSTER_NAME \
+      #       --service $ECS_SERVICE_NAME \
+      #       --task-definition $TASK_DEFINITION_NAME

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tpss-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tpss-app
+  template:
+    metadata:
+      labels:
+        app: tpss-app
+    spec:
+      containers:
+        - name: tpss-app
+          image: courageoi/nodeapp:1.0
+          ports:
+          - containerPort: 8000
+          resources:
+            requests:
+              cpu: "0.5"
+              memory: "500Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tpss-app-service
+spec:
+  selector:
+    name: tpss-app
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+    - name: https
+      port: 443
+      targetPort: 443
