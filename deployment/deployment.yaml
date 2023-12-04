@@ -56,7 +56,6 @@ kind: Rollout
 metadata:
   name: tpss-rollout-demo
 spec:
-  replicas: 5
   strategy:
     canary:
       steps:
@@ -87,3 +86,16 @@ spec:
             limits:
               cpu: "1"
               memory: "1Gi"
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-tpss-rollout-demo
+spec:
+  maxReplicas: 5
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    name: tpss-rollout-demo
+  targetCPUUtilizationPercentage: 80
