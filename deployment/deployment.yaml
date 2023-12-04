@@ -75,8 +75,8 @@ spec:
         app: tpss-rollout-demo
     spec:
       containers:
-        - name: nginx
-          image: courageoi/nodeapp:1.0
+        - name: my-app
+          image: nginx
           ports:
           - containerPort: 3001
           resources:
