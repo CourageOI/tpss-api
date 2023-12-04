@@ -76,7 +76,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: nginx
+          image: courageoi/nodeapp:1.0
           ports:
           - containerPort: 3001
           resources:
