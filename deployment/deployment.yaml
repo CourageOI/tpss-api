@@ -77,11 +77,11 @@ spec:
           - containerPort: 80
           resources:
             requests:
-              cpu: "0.05"
-              memory: "50Mi"
+              cpu: "0.02"
+              memory: "20Mi"
             limits:
-              cpu: ".5"
-              memory: "100Mi"
+              cpu: ".05"
+              memory: "50Mi"
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
@@ -94,4 +94,4 @@ spec:
     apiVersion: argoproj.io/v1alpha1
     kind: Rollout
     name: tpss-rollout-demo
-  targetCPUUtilizationPercentage: 20
+  targetCPUUtilizationPercentage: 10
