@@ -70,6 +70,7 @@ spec:
       labels:
         app: tpss-rollout-demo
     spec:
+      revisionHistoryLimit: 3
       containers:
         - name: my-app
           image: nginx
