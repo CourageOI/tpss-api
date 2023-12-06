@@ -16,18 +16,18 @@ spec:
       #   - name: service-name
       #     value: demo-canary.default.svc.cluster.local
       steps:
-      - setWeight: 50
+      - setWeight: 35
       - pause: {}
       - setWeight: 50
-      # canaryService: demo-canary
-      # stableService: demo
-      # trafficRouting:
-      #   istio:
-      #      virtualService: 
-      #       name: istio-vs
-      #       routes:
-      #       - primary # At least one route is required
-  replicas: 2
+      canaryService: demo-canary
+      stableService: demo
+      trafficRouting:
+        istio:
+           virtualService: 
+            name: istio-vs
+            routes:
+            - primary # At least one route is required
+  replicas: 3
   revisionHistoryLimit: 2
   selector:
     matchLabels:
@@ -65,18 +65,18 @@ spec:
   selector:
     app: demo
   type: ClusterIP
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: demo-canary
-# spec:
-#   ports:
-#   - port: 80
-#     targetPort: 8080
-#   selector:
-#     app: demo
-#   type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-canary
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: demo
+  type: ClusterIP
 ---
 # apiVersion: argoproj.io/v1alpha1
 # kind: AnalysisTemplate
