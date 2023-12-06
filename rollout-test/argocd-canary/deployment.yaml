@@ -19,14 +19,14 @@ spec:
       - setWeight: 50
       - pause: {}
       - setWeight: 50
-      canaryService: demo-canary
-      stableService: demo
-      trafficRouting:
-        istio:
-           virtualService: 
-            name: istio-vs
-            routes:
-            - primary # At least one route is required
+      # canaryService: demo-canary
+      # stableService: demo
+      # trafficRouting:
+      #   istio:
+      #      virtualService: 
+      #       name: istio-vs
+      #       routes:
+      #       - primary # At least one route is required
   replicas: 2
   revisionHistoryLimit: 2
   selector:
@@ -65,18 +65,18 @@ spec:
   selector:
     app: demo
   type: ClusterIP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: demo-canary
-spec:
-  ports:
-  - port: 80
-    targetPort: 8080
-  selector:
-    app: demo
-  type: ClusterIP
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: demo-canary
+# spec:
+#   ports:
+#   - port: 80
+#     targetPort: 8080
+#   selector:
+#     app: demo
+#   type: ClusterIP
 ---
 # apiVersion: argoproj.io/v1alpha1
 # kind: AnalysisTemplate
