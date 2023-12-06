@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: tpss-app-service-stable
+  name: demo-stable
 spec:
   selector:
     app: tpss-rollout-demo
@@ -13,7 +13,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: tpss-app-service-canary
+  name: demo-canary
 spec:
   selector:
     app: tpss-rollout-demo
@@ -54,7 +54,7 @@ spec:
         app: tpss-rollout-demo
     spec:
       containers:
-        - name: my-app
+        - name: tpss-rollout-demo
           image: nginx
           ports:
           - containerPort: 80
