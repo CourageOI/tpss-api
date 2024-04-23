@@ -16,9 +16,11 @@ spec:
       #   - name: service-name
       #     value: demo-canary.default.svc.cluster.local
       steps:
-      - setWeight: 35
+      - setWeight: 20
       - pause: {}
-      - setWeight: 50
+      - setWeight: 40
+      - pause: {}
+      setWeight: 40
       canaryService: demo-canary
       stableService: demo
       trafficRouting:
@@ -27,8 +29,8 @@ spec:
             name: istio-vs
             routes:
             - primary # At least one route is required
-  replicas: 3
-  revisionHistoryLimit: 2
+  replicas: 5
+  revisionHistoryLimit: 4
   selector:
     matchLabels:
       app: demo
