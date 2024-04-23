@@ -8,19 +8,12 @@ metadata:
 spec:
   strategy:
     canary:
-      # analysis:
-      #   templates:
-      #   - templateName: success-rate
-      #   startingStep: 2
-      #   args:
-      #   - name: service-name
-      #     value: demo-canary.default.svc.cluster.local
       steps:
       - setWeight: 20
       - pause: {}
       - setWeight: 40
       - pause: {}
-      setWeight: 40
+      - setWeight: 40
       canaryService: demo-canary
       stableService: demo
       trafficRouting:
