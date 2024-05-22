@@ -9,7 +9,9 @@ spec:
   strategy:
     canary:
       steps:
-      - setWeight: 50
+      - setWeight: 40
+      - pause: {}
+      - setWeight: 40
       - pause: {}
       canaryService: demo-canary
       stableService: demo
@@ -33,7 +35,7 @@ spec:
     spec:
       containers:
       - name: demo
-        image: argoproj/rollouts-demo:blue
+        image: argoproj/rollouts-demo:green
         imagePullPolicy: Always
         ports:
         - name: web
