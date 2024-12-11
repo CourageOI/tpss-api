@@ -9,7 +9,7 @@ on:
       environment:
         description: 'Environment to deploy'
         required: false
-        default: 'staging'
+        default: 'dev'
 jobs:
   build:
     runs-on: ubuntu-latest
