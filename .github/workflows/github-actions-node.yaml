@@ -1,14 +1,34 @@
-name: Docker Build and Deploy to ECS
+name: Multi-Job Workflow with Manual Build
 
 on:
   push:
     branches:
       - main
       - dev
+  # workflow_dispatch: # Enables manual trigger for this workflow
+
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run Tests
+        run: echo "Running tests..."
+    
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run Linter
+        run: echo "Running linter..."
+
   build-and-deploy:
     runs-on: ubuntu-latest
-
+    if: github.event_name == 'workflow_dispatch' # Only runs on manual trigger
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -32,19 +52,15 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1 # Change this to your desired AWS region
 
+      # Uncomment the deploy steps if needed
       # - name: Deploy to AWS ECS
       #   run: |
-      #     # Update your ECS cluster name, service name, and task definition name
       #     ECS_CLUSTER_NAME="your-ecs-cluster-name"
       #     ECS_SERVICE_NAME="your-ecs-service-name"
       #     TASK_DEFINITION_NAME="your-task-definition-name"
-          
-      #     # Create a new task definition revision
       #     aws ecs register-task-definition \
       #       --family $TASK_DEFINITION_NAME \
       #       --container-definitions '[{"name":"your-container-name","image":"your-dockerhub-username/your-image-name:latest"}]'
-          
-      #     # Update the ECS service to use the new task definition
       #     aws ecs update-service \
       #       --cluster $ECS_CLUSTER_NAME \
       #       --service $ECS_SERVICE_NAME \
