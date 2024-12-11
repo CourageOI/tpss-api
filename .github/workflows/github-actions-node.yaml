@@ -1,53 +1,20 @@
-name: Multi-Job Workflow with Manual Build
+name: Manually Triggered Workflow
 on:
-  push:
-    branches:
-      - main
-      - dev
   workflow_dispatch:
     inputs:
-      deploy:
-        description: 'Approve deployment'
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+      environment:
+        description: 'Environment to deploy'
         required: false
-        type: boolean
-        default: false
-
+        default: 'staging'
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v2
-      - name: Run Tests
-        run: echo "Running tests..."
-    
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Run Linter
-        run: echo "Running linter..."
-  
-  build-and-deploy:
-    needs: [test, lint]
-    if: github.event_name == 'workflow_dispatch' && inputs.deploy == true
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Login to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build and tag Docker image
-        run: |
-          docker build -t your-dockerhub-username/your-image-name:latest .
-          docker tag your-dockerhub-username/your-image-name:latest your-dockerhub-username/your-image-name:latest
-      - name: Push Docker image to Docker Hub
-        run: |
-          docker push your-dockerhub-username/your-image-name:latest
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1 # Change this to your desired AWS region
+      - name: Run a one-line script
+        run: echo "Hello, ${{ github.event.inputs.environment }}!"
