@@ -1,4 +1,4 @@
-ame: Slack Notification for Workflow Failures
+name: Slack Notification for Workflow Failures
 on:
   workflow_run:
     workflows: [Multi-Job Workflow with Manual Build]
