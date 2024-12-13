@@ -27,7 +27,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run Linter
-        run: echo "Running linter..."
+        run: |
+          Failing job...
+          exit 1
   
   build-and-deploy:
     needs: [test, lint]
