@@ -1,7 +1,7 @@
 name: Slack Notification for Workflow Failures
 on:
   workflow_run:
-    workflows: [Multi-Job Workflow with Manual Build]
+    workflows: [Multi-Job Workflow with Manual Build, Another Workflow]
     types: [completed]
     branches: [main,dev]
 
