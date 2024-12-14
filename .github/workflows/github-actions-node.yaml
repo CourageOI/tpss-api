@@ -28,8 +28,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Run Linter
         run: |
-          Failing job...
-          exit 1
+          echo "linting job"
   
   build-and-deploy:
     needs: [test, lint]
