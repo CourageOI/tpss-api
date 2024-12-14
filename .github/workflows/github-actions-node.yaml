@@ -36,12 +36,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Login to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build and tag Docker image
-        run: |
-          docker build -t your-dockerhub-username/your-image-name:latest .
-          docker tag your-dockerhub-username/your-image-name:latest your-dockerhub-username/your-image-name:latest
+      - name: Run Linter
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.build == true)
+        run: echo "linting job"
+      # - name: Login to Docker Hub
+      #   run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+      # - name: Build and tag Docker image
+      #   run: |
+      #     docker build -t your-dockerhub-username/your-image-name:latest .
+      #     docker tag your-dockerhub-username/your-image-name:latest your-dockerhub-username/your-image-name:latest
       # - name: Push Docker image to Docker Hub
       #   run: docker push your-dockerhub-username/your-image-name:latest
       # - name: Configure AWS credentials
@@ -50,3 +53,4 @@ jobs:
       #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
       #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       #     aws-region: us-east-1
+      
