@@ -4,7 +4,7 @@ metadata:
   name: demo-stable
 spec:
   selector:
-    app: tpss-rollout-demo
+    app: tpss-api-rollout-demo
   ports:
     - name: http
       port: 80
