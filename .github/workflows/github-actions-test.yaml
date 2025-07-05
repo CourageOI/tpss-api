@@ -19,37 +19,40 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run Tests
-        run: echo "Running tests..."
+        run: |
+            # Fetch all repository variables
+            gh variable list --json name,value > repo_vars.json
+            echo $replicas_vars.json
     
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Run Linter
-        run: |
-          Failing job...
-          exit 1
+  # lint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+  #     - name: Run Linter
+  #       run: |
+  #         Failing job...
+  #         exit 1
   
-  build-and-deploy:
-    needs: [test, lint]
-    if: github.event_name == 'workflow_dispatch' && inputs.deploy == true
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Login to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build and tag Docker image
-        run: |
-          docker build -t your-dockerhub-username/your-image-name:latest .
-          docker tag your-dockerhub-username/your-image-name:latest your-dockerhub-username/your-image-name:latest
-      - name: Push Docker image to Docker Hub
-        run: |
-          docker push your-dockerhub-username/your-image-name:latest
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1 # Change this to your desired AWS region
+  # build-and-deploy:
+  #   needs: [test, lint]
+  #   if: github.event_name == 'workflow_dispatch' && inputs.deploy == true
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+  #     - name: Login to Docker Hub
+  #       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+  #     - name: Build and tag Docker image
+  #       run: |
+  #         docker build -t your-dockerhub-username/your-image-name:latest .
+  #         docker tag your-dockerhub-username/your-image-name:latest your-dockerhub-username/your-image-name:latest
+  #     - name: Push Docker image to Docker Hub
+  #       run: |
+  #         docker push your-dockerhub-username/your-image-name:latest
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v1
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: us-east-1 # Change this to your desired AWS region
