@@ -21,8 +21,7 @@ jobs:
       - name: Run Tests
         run: |
             # Fetch all repository variables
-            gh variable list --json name,value > repo_vars.json
-            cat replicas_vars.json
+            gh variable list --json name,value
         env:
           GH_TOKEN: ${{ secrets.pat }}
     
