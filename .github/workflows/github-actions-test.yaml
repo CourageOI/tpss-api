@@ -23,6 +23,8 @@ jobs:
             # Fetch all repository variables
             gh variable list --json name,value > repo_vars.json
             echo $replicas_vars.json
+        env:
+          GH_TOKEN: ${{ github.token }}
     
   # lint:
   #   runs-on: ubuntu-latest
