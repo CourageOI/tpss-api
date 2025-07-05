@@ -24,7 +24,7 @@ jobs:
             gh variable list --json name,value > repo_vars.json
             cat replicas_vars.json
         env:
-          GH_TOKEN: ${{ secret.pat }}
+          GH_TOKEN: ${{ secrets.pat }}
     
   # lint:
   #   runs-on: ubuntu-latest
